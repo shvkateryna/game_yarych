@@ -122,66 +122,70 @@ print('\nПривіт! Гра полягає в тому, щоб виконат�
 while dead is False:
 
     print("\n")
-    current_room.get_details()
+    try:
+        current_room.get_details()
 
-    inhabitant = current_room.get_character()
-    if inhabitant is not None:
-        inhabitant.describe()
-
-    item = current_room.get_item()
-    if item is not None and item.availability is True:
-        item.describe()
-    if isinstance(current_room, yarych_classes.Room):
-        hint = current_room.hint
-        hint.describe()
-
-    command = input("> ")
-
-    if command in ["музична школа", "учительська", "народний дім",\
-    "хата", "кімната Павла", "школа"]:
-        # Move in the given direction
-        current_room = current_room.move(command)
-    elif command == "говорити":
-        # Talk to the inhabitant - check whether there is one!
+        inhabitant = current_room.get_character()
         if inhabitant is not None:
-            inhabitant.talk()
-    elif command == "вирішувати":
-        if inhabitant is not None and isinstance(inhabitant, yarych_classes.Enemy):
-            # Fight with the inhabitant, if there is one
-            print("Що використаєш у такій ситуації?")
-            fight_with = input()
+            inhabitant.describe()
 
-            # Do I have this item?
-            if fight_with in backpack:
+        item = current_room.get_item()
+        if item is not None and item.availability is True:
+            item.describe()
+        if isinstance(current_room, yarych_classes.Room):
+            hint = current_room.hint
+            hint.describe()
 
-                if inhabitant.fight(fight_with) is True:
-                    # What happens if you win?
-                    print("Ура! Ти справився!")
-                    current_room.character = None
-                    if inhabitant.get_defeated() == 4:
-                        print("Вітаю! Ти вирішив усі справи")
+        command = input("> ")
+
+        if command in ["музична школа", "учительська", "народний дім",\
+        "хата", "кімната Павла", "школа"]:
+            # Move in the given direction
+            current_room = current_room.move(command)
+        elif command == "говорити":
+            # Talk to the inhabitant - check whether there is one!
+            if inhabitant is not None:
+                inhabitant.talk()
+        elif command == "вирішувати":
+            if inhabitant is not None and isinstance(inhabitant, yarych_classes.Enemy):
+                # Fight with the inhabitant, if there is one
+                print("Що використаєш у такій ситуації?")
+                fight_with = input()
+
+                # Do I have this item?
+                if fight_with in backpack:
+
+                    if inhabitant.fight(fight_with) is True:
+                        # What happens if you win?
+                        print("Ура! Ти справився!")
+                        current_room.character = None
+                        if inhabitant.get_defeated() == 4:
+                            print("Вітаю! Ти вирішив усі справи")
+                            dead = True
+                    else:
+                        # What happens if you lose?
+                        print("На жаль, ти програв")
+                        print("Це кінець гри")
                         dead = True
                 else:
-                    # What happens if you lose?
-                    print("На жаль, ти програв")
-                    print("Це кінець гри")
-                    dead = True
+                    print("Ти не маєш " + fight_with)
             else:
-                print("Ти не маєш " + fight_with)
+                print("Тут немає нікого")
+        elif command == "взяти":
+            if item is not None:
+                print("Ти поклав " + item.get_name() + " у свій рюкзак")
+                backpack.append(item.get_name())
+                current_room.set_item(None)
+            else:
+                print("Тут немає нічого")
+        elif command == "допомогти":
+            if isinstance(inhabitant, yarych_classes.Friend):
+                inhabitant.help_friend()
+                item.availability = True
+        elif command == "підказати":
+            hint.get_hint()
         else:
-            print("Тут немає нікого")
-    elif command == "взяти":
-        if item is not None:
-            print("Ти поклав " + item.get_name() + " у свій рюкзак")
-            backpack.append(item.get_name())
-            current_room.set_item(None)
-        else:
-            print("Тут немає нічого")
-    elif command == "допомогти":
-        if isinstance(inhabitant, yarych_classes.Friend):
-            inhabitant.help_friend()
-            item.availability = True
-    elif command == "підказати":
-        hint.get_hint()
-    else:
-        print("Я не знаю, як " + command)
+            print("Я не знаю, як " + command)
+    except AttributeError:
+        print('Ти не можеш піти у цю кімнату')
+        break
