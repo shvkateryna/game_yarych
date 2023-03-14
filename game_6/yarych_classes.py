@@ -1,5 +1,7 @@
+"""Yarych classes"""
 counter_enemy = 0
 class Location():
+    """Information about location"""
     def __init__(self, name, description = '', item = None, character = None) -> None:
         self.name = name
         self.item = item
@@ -8,6 +10,7 @@ class Location():
         self.character = character
 
     def set_description(self, description):
+        """Function for setting description"""
         self.description = description
 
     def link_room(self, link, side):
@@ -36,32 +39,41 @@ class Location():
         print(locations)
 
     def get_character(self):
-        """Get character"""
+        """
+        Get character
+        """
         return self.character
 
     def get_item(self):
-        """Get item"""
+        """
+        Get item
+        """
         return self.item
 
     def move(self, side):
-        """Move"""
+        """
+        Move
+        """
         for item in self.rooms:
             if item[1] == side:
                 return item[0]
 
 class Room(Location):
+    """Information about room"""
     def __init__(self, name, character = None, description='', hint = None) -> None:
         super().__init__(name, description, character)
         self.rooms = []
         self.hint = hint
 
     def set_hint(self, hint):
+        """Function for setting hint"""
         self.hint = hint
 
     def get_hint(self):
         self.hint.get_hint()
 
 class Character():
+    """Information about character"""
     def __init__(self, name, description, conversation = None) -> None:
         self.name = name
         self.description = description
@@ -81,6 +93,7 @@ class Character():
         print(f'[{self.name} говорить]: {self.conversation}')
 
 class Friend(Character):
+    """Information about friend"""
     def __init__(self, name, description, conversation = None, help = '') -> None:
         super().__init__(name, description, conversation)
         self.help = help
@@ -90,12 +103,15 @@ class Friend(Character):
         return super().describe()
 
     def set_help(self, help):
+        """Function for setting help"""
         self.help = help
 
     def help_friend(self):
+        """Function returns help"""
         print(self.help)
 
 class Item():
+    """Information about item"""
     def __init__(self, name: str, description='', availability = None) -> None:
         self.name = name
         self.description = description
@@ -104,9 +120,11 @@ class Item():
         self.availability = availability
 
     def describe(self):
+        """Function for describing"""
         print(f'[{self.name}] тут знаходиться\nОпис: {self.description}')
 
     def get_name(self):
+        """Function returns name"""
         return self.name
 
     def set_description(self, description):
@@ -114,6 +132,7 @@ class Item():
         self.description = description
 
 class Hint(Item):
+    """Information about hint"""
     def __init__(self, name: str, description='', availability=True, hint = '') -> None:
         super().__init__(name, description, availability)
         self.hint = hint
@@ -123,13 +142,16 @@ class Hint(Item):
         print(self.name)
 
     def set_hint(self, hint):
+        """Function for setting hint"""
         self.hint = hint
 
     def get_hint(self):
+        """Function returns hint"""
         print(self.description)
         print(self.hint)
 
 class Enemy(Character):
+    """Information about enemy"""
     def __init__(self, name, description, conversation = None, weakness = None) -> None:
         super().__init__(name, description, conversation)
         self.weakness = weakness

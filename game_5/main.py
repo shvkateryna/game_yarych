@@ -1,3 +1,4 @@
+"""Task 5"""
 import game
 
 kitchen = game.Room("Kitchen")
@@ -7,7 +8,8 @@ dining_hall = game.Room("Dining Hall")
 dining_hall.set_description("A large room with ornate golden decorations on each wall.")
 
 ballroom = game.Room('Ballroom')
-ballroom.set_description("A vast room with a shiny wooden floor. Huge candlesticks guard the entrance.")
+ballroom.set_description("A vast room with a shiny wooden floor.\
+ Huge candlesticks guard the entrance.")
 
 kitchen.link_room(dining_hall, "south")
 dining_hall.link_room(kitchen, "north")
@@ -21,7 +23,8 @@ dining_hall.set_character(dave)
 
 ellie = game.Friend("Ellie", "A beautiful fairy woman")
 ellie.set_conversation("Hello! I have been waiting for you!!! I have some tips for you")
-ellie.set_advice("You need to collect all the items to defeat the enemies. Dave - cheese. Tabitha - book.")
+ellie.set_advice("You need to collect all the items to defeat the enemies.\
+ Dave - cheese. Tabitha - book.")
 kitchen.set_character(ellie)
 
 tabitha = game.Enemy("Tabitha", "An enormous spider with countless eyes and furry legs.")
@@ -42,7 +45,7 @@ backpack = []
 
 dead = False
 
-while dead == False:
+while dead is False:
 
     print("\n")
     current_room.get_details()
@@ -73,7 +76,7 @@ while dead == False:
             # Do I have this item?
             if fight_with in backpack:
 
-                if inhabitant.fight(fight_with) == True:
+                if inhabitant.fight(fight_with) is True:
                     # What happens if you win?
                     print("Hooray, you won the fight!")
                     current_room.character = None

@@ -1,5 +1,7 @@
+"""Task 5"""
 counter_enemy = 0
 class Character():
+    """Information about character"""
     def __init__(self, name, description, conversation = None) -> None:
         self.name = name
         self.description = description
@@ -19,6 +21,7 @@ class Character():
         print(f'[{self.name} says]: {self.conversation}')
 
 class Enemy(Character):
+    """Information about enemy"""
     def __init__(self, name, description, conversation = None, weakness = None) -> None:
         super().__init__(name, description, conversation)
         self.weakness = weakness
@@ -43,25 +46,30 @@ class Enemy(Character):
         return counter_enemy
 
 class Friend(Character):
+    """Information about friend"""
     def __init__(self, name, description, conversation = None, hint = None) -> None:
         super().__init__(name, description, conversation)
         self.hint = hint
 
     def set_advice(self, hint):
+        """Function for setting advice"""
         self.hint = hint
 
     def talk(self):
         print(f'[{self.name} says]: {self.conversation}\n{self.hint}')
 
 class Item():
+    """Information about item"""
     def __init__(self, name: str, description='') -> None:
         self.name = name
         self.description = description
 
     def describe(self):
+        """Function for describing"""
         print(f'The [{self.name}] is here - {self.description}')
 
     def get_name(self):
+        """Function returns name of item"""
         return self.name
 
     def set_description(self, description):
@@ -69,6 +77,7 @@ class Item():
         self.description = description
 
 class Room():
+    """Information about room"""
     def __init__(self, name:str, description = '', character = None, item = None) -> None:
         self.name = name
         self.description = description
