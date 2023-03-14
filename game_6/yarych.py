@@ -168,6 +168,6 @@ while dead == False:
             inhabitant.help_friend()
             item.availability = True
     elif command == "підказати":
-        current_room.get_hint()
+        hint.get_hint()
     else:
         print("Я не знаю, як " + command)
